@@ -9,14 +9,14 @@ class StanzaBloccataTest {
 private Stanza stanza;
 private Attrezzo chiave;
 private Attrezzo osso;
-private String direzioneBloccata;
+private Direzioni direzioneBloccata;
 private String unlock;
 private Stanza adiacenteBloccata;
 private Stanza adiacenteLibera;
  
 	@BeforeEach
 	void setUp() throws Exception {
-		direzioneBloccata="nord";
+		direzioneBloccata=Direzioni.NORD;
 		unlock="chiave";
 		stanza=new StanzaBloccata("Atrio",direzioneBloccata,unlock);
 		chiave=new Attrezzo("chiave",2);
@@ -24,7 +24,7 @@ private Stanza adiacenteLibera;
 		adiacenteBloccata=new Stanza("Biblioteca");
 		adiacenteLibera=new Stanza("Cinema");
 		stanza.impostaStanzaAdiacente(direzioneBloccata, adiacenteBloccata);
-		stanza.impostaStanzaAdiacente("sud", adiacenteLibera);
+		stanza.impostaStanzaAdiacente(Direzioni.SUD, adiacenteLibera);
 		
 		
 	}
@@ -41,7 +41,7 @@ private Stanza adiacenteLibera;
 	}
 	@Test
 	void testStanzaLibera() {
-		assertEquals(adiacenteLibera,stanza.getStanzaAdiacente("sud"));
+		assertEquals(adiacenteLibera,stanza.getStanzaAdiacente(Direzioni.SUD));
 	}
 	@Test
 	void testDescrizioneSenzaOggetto() {

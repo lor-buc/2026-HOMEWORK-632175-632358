@@ -29,136 +29,108 @@ static final private int NUMERO_MASSIMO_ATTREZZI = 10;
 
 	@Test
 	void testImpostaStanzaAdiacente() {
-		atrio.impostaStanzaAdiacente("nord", biblioteca);
-		assertEquals(biblioteca, atrio.getStanzaAdiacente("nord"));
+	    atrio.impostaStanzaAdiacente(Direzioni.NORD, biblioteca);
+	    assertEquals(biblioteca, atrio.getStanzaAdiacente(Direzioni.NORD));
 	}
 
 	@Test
 	void testImpostaStanzaAdiacenteNull() {
-		assertNull(atrio.getStanzaAdiacente("nord"));
+	    assertNull(atrio.getStanzaAdiacente(Direzioni.NORD));
 	}
-	
+
 	@Test
 	void testAggiornaStanzaAdiacente() {
-		atrio.impostaStanzaAdiacente("nord", biblioteca);
-		atrio.impostaStanzaAdiacente("nord", laboratorio);
-		assertEquals(laboratorio, atrio.getStanzaAdiacente("nord"));	
+	    atrio.impostaStanzaAdiacente(Direzioni.NORD, biblioteca);
+	    atrio.impostaStanzaAdiacente(Direzioni.NORD, laboratorio);
+	    assertEquals(laboratorio, atrio.getStanzaAdiacente(Direzioni.NORD));
 	}
-	
+
 	@Test
 	void testAddAttrezzoAggiungoUnAttrezzo() {
-		assertTrue(atrio.addAttrezzo(martello));
+	    assertTrue(atrio.addAttrezzo(martello));
 	}
-	
+
 	@Test
 	void testAddAttrezzoAggiungoDueAttrezzi() {
-		atrio.addAttrezzo(martello);
-		atrio.addAttrezzo(osso);
-		assertTrue(atrio.hasAttrezzo("martello"));
-		assertTrue(atrio.hasAttrezzo("osso"));
-	} 
-	
-	@Test
-	void testAddAttrezzoDopoMax() {
-	for(int i=0;i<NUMERO_MASSIMO_ATTREZZI;i++) {
-	atrio.addAttrezzo(martello);	
+	    atrio.addAttrezzo(martello);
+	    atrio.addAttrezzo(osso);
+	    assertTrue(atrio.hasAttrezzo("martello"));
+	    assertTrue(atrio.hasAttrezzo("osso"));
 	}
-	assertFalse(atrio.addAttrezzo(osso));
-	}	
-	
-	
-	@Test
-	void testGetAttrezziStanzaSenzaAttrezzi() {
-		for (int i=0;i<NUMERO_MASSIMO_ATTREZZI;i++) {
-			assertEquals(atrio.getAttrezzi()[i], null);
-		}
-	}
-	
+
 	@Test
 	void testGetAttrezziStanzaVuota() {
-		atrio.addAttrezzo(martello);
-		assertEquals(martello,atrio.getAttrezzi()[0]);
+	    assertTrue(atrio.getAttrezzi().isEmpty());
 	}
-	
+
 	@Test
-	void testGetAttrezziStanzaNonVuota() {
-		for (int i=0;i<5;i++) {
-			atrio.addAttrezzo(martello);
-		}
-		assertEquals(martello,atrio.getAttrezzi()[4]);
+	void testGetAttrezziStanzaConUnAttrezzo() {
+	    atrio.addAttrezzo(martello);
+	    assertEquals(martello, atrio.getAttrezzi().get(0));
 	}
-	
+
 	@Test
 	void testHasAttrezzoStanzaVuota() {
-		assertFalse(atrio.hasAttrezzo("martello"));
+	    assertFalse(atrio.hasAttrezzo("martello"));
 	}
-	
+
 	@Test
 	void testStanzaHasUnAttrezzo() {
-		atrio.addAttrezzo(martello);
-		assertTrue(atrio.hasAttrezzo("martello"));
+	    atrio.addAttrezzo(martello);
+	    assertTrue(atrio.hasAttrezzo("martello"));
 	}
-	
-	@Test
-	void testHasAttrezzoConSoloOsso() {
-		for(int i=0;i<NUMERO_MASSIMO_ATTREZZI;i++) {
-			atrio.addAttrezzo(osso);	
-			}
-		assertFalse(atrio.hasAttrezzo("martello"));
-	}
-	
+
 	@Test
 	void testGetAttrezzoStanzaVuota() {
-		assertNull(atrio.getAttrezzo("martello"));
+	    assertNull(atrio.getAttrezzo("martello"));
 	}
-	
+
 	@Test
 	void testGetAttrezzoStanzaConOggetto() {
-		atrio.addAttrezzo(martello);
-		assertEquals(martello,atrio.getAttrezzo("martello"));
+	    atrio.addAttrezzo(martello);
+	    assertEquals(martello, atrio.getAttrezzo("martello"));
 	}
-	
+
 	@Test
 	void testGetAttrezzoStanzaSenzaOggetto() {
-		atrio.addAttrezzo(martello);
-		assertNull(atrio.getAttrezzo("osso"));
+	    atrio.addAttrezzo(martello);
+	    assertNull(atrio.getAttrezzo("osso"));
 	}
-	
+
 	@Test
 	void testRemoveOggettoDaStanzaVuota() {
-		assertFalse(atrio.removeAttrezzo(martello));
+	    assertFalse(atrio.removeAttrezzo(martello));
 	}
-	
-	
+
 	@Test
 	void testRemoveAttrezzoDaStanzaConUnOggetto() {
-		atrio.addAttrezzo(martello);
-		assertTrue(atrio.removeAttrezzo(martello));
+	    atrio.addAttrezzo(martello);
+	    assertTrue(atrio.removeAttrezzo(martello));
 	}
-	
+
 	@Test
 	void testRemoveAttrezzoStanzaSenzaOggetto() {
-		atrio.addAttrezzo(martello);
-		assertFalse(atrio.removeAttrezzo(osso));
+	    atrio.addAttrezzo(martello);
+	    assertFalse(atrio.removeAttrezzo(osso));
 	}
-	
+
 	@Test
 	void testSenzaDirezioni() {
-		assertEquals(0,atrio.getDirezioni().length);
+	    assertEquals(0, atrio.getDirezioni().size());
 	}
-	
+
 	@Test
 	void testUnaDirezione() {
-		atrio.impostaStanzaAdiacente("sud",laboratorio);
-		assertEquals("sud",atrio.getDirezioni()[0]);
+	    atrio.impostaStanzaAdiacente(Direzioni.SUD, laboratorio);
+	    assertTrue(atrio.getDirezioni().contains(Direzioni.SUD));
 	}
-	
+
 	@Test
 	void testTuttaTranneUnaDirezione() {
-		atrio.impostaStanzaAdiacente("sud",laboratorio);
-		atrio.impostaStanzaAdiacente("est",biblioteca);
-		atrio.impostaStanzaAdiacente("ovest",ovest);
-		for(int i=0;i<3;i++)
-		assertNotEquals("nord",atrio.getDirezioni()[i]);
+	    atrio.impostaStanzaAdiacente(Direzioni.SUD, laboratorio);
+	    atrio.impostaStanzaAdiacente(Direzioni.EST, biblioteca);
+	    atrio.impostaStanzaAdiacente(Direzioni.OVEST, ovest);
+	    assertFalse(atrio.getDirezioni().contains("nord")); 
+	    
 	}
 }

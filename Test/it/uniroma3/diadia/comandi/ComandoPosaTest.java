@@ -16,7 +16,7 @@ private IO io;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		io=new IOConsole();
+		io=new IOSimulator(new String[] {});
 		partita=new Partita(io);
 		piuma=new Attrezzo("piuma",1);
 		fero=new Attrezzo("fero",6);
@@ -48,5 +48,7 @@ private IO io;
 		posa.esegui(partita);
 		assertFalse(partita.getStanzaCorrente().hasAttrezzo("piuma"));
 	}
+	
+
 
 }

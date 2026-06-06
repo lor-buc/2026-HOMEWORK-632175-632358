@@ -18,7 +18,7 @@ class FabbricaDiComandiFisarmonicaTest {
 
     @BeforeEach
     void setUp() {
-        this.fabbrica = new FabbricaDiComandiFisarmonica();
+        this.fabbrica = new FabbricaDiComandiRiflessiva();
     }
 
     // --- comandi senza parametro ---
@@ -47,7 +47,7 @@ class FabbricaDiComandiFisarmonicaTest {
     void testRiconoscimentoVaiConParametro() {
         Comando cmd = fabbrica.costruisciComando("vai nord");
         assertEquals("vai", cmd.getNome());
-        assertEquals("nord", cmd.getParametro());
+        assertEquals("NORD", cmd.getParametro());
     }
 
     @Test

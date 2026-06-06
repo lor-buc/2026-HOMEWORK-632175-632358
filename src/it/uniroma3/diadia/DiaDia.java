@@ -1,13 +1,17 @@
-	package it.uniroma3.diadia;
+package it.uniroma3.diadia;
 
 
 
 
+import java.util.Scanner;
+
+import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandi;
-import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
+
+import it.uniroma3.diadia.comandi.FabbricaDiComandiRiflessiva;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -42,6 +46,11 @@ public class DiaDia {
 		this.partita = new Partita(console);
 		this.console=console;
 	}
+	public DiaDia(Labirinto labirinto,IO console) {
+		this.partita = new Partita(labirinto,console);
+		this.console=console;
+	}
+	
 
 	public void gioca() {
 		String istruzione; 
@@ -64,7 +73,7 @@ public class DiaDia {
 	 */
 	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire;
-		FabbricaDiComandi factory = new FabbricaDiComandiFisarmonica();
+		FabbricaDiComandi factory = new FabbricaDiComandiRiflessiva();
 		comandoDaEseguire = factory.costruisciComando(istruzione);
 		comandoDaEseguire.esegui(this.partita);
 		if (this.partita.vinta())
@@ -97,20 +106,29 @@ public class DiaDia {
 	/**
 	 * Comando "Fine".
 	 */
-
-
 	public static void main(String[] argc) {
-	IO console=new IOConsole();
-		DiaDia gioco = new DiaDia(console);
+		/* N.B. unica istanza di IOConsole
+		di cui sia ammessa la creazione */
+		try(Scanner scanner = new Scanner(System.in)){
+		IO io=new IOConsole(scanner);
+		Labirinto labirinto = Labirinto.newBuilder()
+		.addStanzaIniziale("LabCampusOne")
+		.addStanzaVincente("Biblioteca")
+		.addAdiacenza("LabCampusOne","Biblioteca","ovest")
+		.getLabirinto();
+		DiaDia gioco = new DiaDia(labirinto, io);
 		gioco.gioca();
-	}
+		}
+		}
+
+	
 	
 	public void prendiAttrezzo(String nomeAttrezzo) {
 		if(partita.getStanzaCorrente().hasAttrezzo(nomeAttrezzo)) {
 			Attrezzo attrezzo=partita.getStanzaCorrente().getAttrezzo(nomeAttrezzo);
 			
 		partita.getGiocatore().getBorsa().addAttrezzo(attrezzo);
-	partita.getStanzaCorrente().removeAttrezzo(attrezzo);
+	partita.getLabirinto().removeAttrezzoLabirinto(partita.getStanzaCorrente(),attrezzo);
 		}
 		
 }
@@ -119,8 +137,8 @@ public class DiaDia {
 		if(partita.getGiocatore().getBorsa().hasAttrezzo(nomeAttrezzo)) {
 			Attrezzo attrezzo=partita.getGiocatore().getBorsa().getAttrezzo(nomeAttrezzo);
 			partita.getGiocatore().getBorsa().removeAttrezzo(nomeAttrezzo);
-			partita.getStanzaCorrente().addAttrezzo(attrezzo);
-		}
+
+			partita.getLabirinto().addAttrezzoLabirinto(partita.getStanzaCorrente(),attrezzo);}
 		
 	}
 	

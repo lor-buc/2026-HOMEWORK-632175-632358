@@ -22,10 +22,18 @@ public class Partita {
 	public Partita(IO io){
 		this.finita = false;
 		this.giocatore = new Giocatore();
-		this.labirinto=new Labirinto();
+		this.labirinto=Labirinto.creaLabirintoDefault();
 		this.stanzaCorrente=labirinto.getStanzaIniziale();
 		this.io=io;
 	}
+	public Partita(Labirinto labirinto,IO io){
+		this.finita = false;
+		this.giocatore = new Giocatore();
+		this.labirinto=labirinto;
+		this.stanzaCorrente=this.labirinto.getStanzaIniziale();
+		this.io=io;
+	}
+	
 	public int getCfu() {
 	    return this.giocatore.getCfu();
 	}
@@ -40,6 +48,11 @@ public class Partita {
 	
 	public Labirinto getLabirinto() {
 	    return this.labirinto;
+	}
+	
+	public void setLabirinto(Labirinto labirinto) {
+		this.labirinto=labirinto;
+		this.stanzaCorrente=labirinto.getStanzaIniziale();
 	}
 	
 	
@@ -79,5 +92,6 @@ public class Partita {
 	public IO getIO() {
 		return this.io;
 	}
+	
 	
 }

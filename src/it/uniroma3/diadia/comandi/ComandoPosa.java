@@ -6,7 +6,7 @@ import it.uniroma3.diadia.giocatore.Borsa;
 
 
 
-public class ComandoPosa implements Comando {
+public class ComandoPosa extends AbstractComando {
 
     private String nomeAttrezzo;
 
@@ -15,7 +15,7 @@ public class ComandoPosa implements Comando {
     	if(partita.getGiocatore().getBorsa().hasAttrezzo(nomeAttrezzo)) {
 			Attrezzo attrezzo=partita.getGiocatore().getBorsa().getAttrezzo(nomeAttrezzo);
 			partita.getGiocatore().getBorsa().removeAttrezzo(nomeAttrezzo);
-			partita.getStanzaCorrente().addAttrezzo(attrezzo);
+			partita.getLabirinto().addAttrezzoLabirinto(partita.getStanzaCorrente(),attrezzo);
 		}
     }
 

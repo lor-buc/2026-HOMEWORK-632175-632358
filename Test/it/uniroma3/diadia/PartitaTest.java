@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Direzioni;
 
 class PartitaTest {
 	
@@ -13,7 +14,7 @@ class PartitaTest {
 	private IO io;
 	@BeforeEach
 	void setUp() throws Exception {
-		io=new IOConsole();
+		io=new IOSimulator(new String[] {});
 		partita=  new Partita(io);
 	}
 
@@ -30,7 +31,7 @@ class PartitaTest {
 	
 	@Test 
 	void testPartitaIsNonFinitaNelMezzo(){
-		partita.setStanzaCorrente(partita.getStanzaCorrente().getStanzaAdiacente("est"));
+		partita.setStanzaCorrente(partita.getStanzaCorrente().getStanzaAdiacente(Direzioni.EST));
 		assertFalse(partita.isFinita());
 	}
 	
@@ -47,7 +48,7 @@ class PartitaTest {
 	
 	@Test
 	void testPartitaIsVintaInStanzaVincente(){
-		partita.setStanzaCorrente(partita.getStanzaCorrente().getStanzaAdiacente("nord"));
+		partita.setStanzaCorrente(partita.getStanzaCorrente().getStanzaAdiacente(Direzioni.NORD));
 		assertTrue(partita.vinta());
 	}
 	

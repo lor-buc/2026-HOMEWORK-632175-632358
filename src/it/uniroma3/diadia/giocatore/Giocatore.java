@@ -1,5 +1,6 @@
 package it.uniroma3.diadia.giocatore;
 
+import it.uniroma3.diadia.Proprieta;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class Giocatore {
@@ -7,8 +8,8 @@ public class Giocatore {
 	private Borsa borsa;
 	
 	 public Giocatore() {
-	        this.cfu = 20;
-	        this.borsa = new Borsa();
+	        this.cfu = Proprieta.getCFUiniziali();
+	        this.borsa = new Borsa(20);
 	    }
 
 	 public Borsa getBorsa() {

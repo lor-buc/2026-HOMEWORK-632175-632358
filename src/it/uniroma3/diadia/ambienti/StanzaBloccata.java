@@ -3,17 +3,17 @@
 	public class StanzaBloccata extends Stanza{
 	
 		
-		private String direzioneBloccata;
+		private Direzioni direzioneBloccata;
 	    private String nomeAttrezzoChiave;
 		
-		public StanzaBloccata(String nome, String direzioneBloccata, String nomeAttrezzoChiave) {
+		public StanzaBloccata(String nome, Direzioni direzioneBloccata, String nomeAttrezzoChiave) {
 			super(nome);
 			this.direzioneBloccata=direzioneBloccata;
 			this.nomeAttrezzoChiave=nomeAttrezzoChiave;
 			
 		}
 		@Override
-		public Stanza getStanzaAdiacente(String direzione) {
+		public Stanza getStanzaAdiacente(Direzioni direzione) {
 			if(direzioneBloccata.equals(direzione)&&!this.hasAttrezzo(nomeAttrezzoChiave)) {
 				return this;
 			}

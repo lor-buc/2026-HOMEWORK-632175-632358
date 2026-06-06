@@ -11,10 +11,12 @@ class ComandoVaiTest {
 private Partita partita;
 private IO io;
 private ComandoVai vai;
+private Partita custom;
+private Labirinto labirinto;
  
 	@BeforeEach
 	void setUp() throws Exception {
-		io=new IOConsole();
+		io=new IOSimulator(new String[] {});
 		partita=new Partita(io);
 		
 		vai=new ComandoVai();
@@ -43,4 +45,51 @@ private ComandoVai vai;
 		assertEquals(20,this.partita.getGiocatore().getCfu());	
 	}
 
+	
+	
+	@Test
+	void testBilocale() {
+		labirinto=Labirinto.newBuilder()
+				.addStanzaIniziale("Atrio")
+				.addAdiacenza("Atrio", "Bagno", "est")
+				.getLabirinto();
+		custom=new Partita(labirinto,io);
+		vai.setParametro("nord");
+		vai.esegui(custom);
+		vai.setParametro("ovest");
+		vai.esegui(custom);
+		vai.setParametro("sud");
+		vai.esegui(custom);
+		vai.setParametro("est");
+		vai.esegui(custom);
+		assertEquals(custom.getStanzaCorrente().getNome(),"Bagno");
+		
+	}
+	@Test
+	void testPercorsoVittoria() {
+		labirinto=Labirinto.newBuilder()
+				.addStanzaIniziale("Atrio")
+				.addAdiacenza("Atrio", "Bagno", "est")
+				.addAdiacenza("Bagno", "Cantina", "nord")
+				.addAdiacenza("Cantina", "Uscita", "ovest")
+				.addStanzaVincente("Uscita")
+				.getLabirinto();
+		custom=new Partita(labirinto,io);
+		
+		vai.setParametro("est");
+		vai.esegui(custom);
+		vai.setParametro("nord");
+		vai.esegui(custom);
+        vai.setParametro("ovest");
+		vai.esegui(custom);
+		assertTrue(custom.vinta());
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }

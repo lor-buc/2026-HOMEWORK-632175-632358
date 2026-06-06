@@ -4,7 +4,7 @@ import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
-public class ComandoPrendi implements Comando {
+public class ComandoPrendi extends AbstractComando {
 
     private String nomeAttrezzo;
 
@@ -14,7 +14,7 @@ public class ComandoPrendi implements Comando {
 			Attrezzo attrezzo=partita.getStanzaCorrente().getAttrezzo(nomeAttrezzo);
 			
 		partita.getGiocatore().getBorsa().addAttrezzo(attrezzo);
-	partita.getStanzaCorrente().removeAttrezzo(attrezzo);
+		partita.getLabirinto().removeAttrezzoLabirinto(partita.getStanzaCorrente(),attrezzo);
     }
     	}
 

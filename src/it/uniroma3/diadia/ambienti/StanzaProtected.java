@@ -26,7 +26,7 @@ public class StanzaProtected {
 	protected Stanza[] stanzeAdiacenti;
 	protected int numeroStanzeAdiacenti;
     
-	protected String[] direzioni;
+	protected	 String[] direzioni;
     
     /**
      * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
